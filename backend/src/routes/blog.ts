@@ -19,6 +19,7 @@ blogRouter.use("/*", async (c, next) => {
     try {
         const user = await verify(authHeader, c.env.JWT_SECRET);
         if (user) {
+            //@ts-ignore
             c.set("userId", user.id);
             await next();
         } else {
@@ -102,6 +103,7 @@ blogRouter.get('/bulk', async (c) => {
             content: true,
             title: true,
             id: true,
+            createdAt: true,
             author: {
                 select: {
                     name: true

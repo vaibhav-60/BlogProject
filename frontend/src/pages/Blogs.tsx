@@ -25,18 +25,19 @@ export const Blogs = () => {
     return (
         <div className="min-h-screen bg-zinc-500">
             <Appbar />
-            <div className='mb-8'></div>
             <div className="pt-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
-                {blogs.map(blog => (
-                    <BlogCard
-                        key={blog.id}
-                        id={blog.id}
-                        authorName={blog.author.name || ""}
-                        title={blog.title}
-                        content={blog.content}
-                        publishedDate={"2.20.2323"}
-                    />
-                ))}
+                <div className="[&>*:last-child]:mb-0">
+                    {blogs.map(blog => (
+                        <BlogCard
+                            key={blog.id}
+                            id={blog.id}
+                            authorName={blog.author.name || ""}
+                            title={blog.title}
+                            content={blog.content}
+                            publishedDate={"2.20.2323"}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );
