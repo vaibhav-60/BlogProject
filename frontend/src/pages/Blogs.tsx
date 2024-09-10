@@ -9,7 +9,7 @@ export const Blogs = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-zinc-500">
+            <div className="min-h-screen bg-zinc-500 overflow-hidden">
                 <Appbar />
                 <div className="pt-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
                     <BlogSkeleton />
@@ -23,10 +23,10 @@ export const Blogs = () => {
     }
 
     return (
-        <div className="min-h-screen bg-zinc-500">
+        <div className="min-h-screen bg-zinc-500 p-4">
             <Appbar />
             <div className="pt-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
-                <div className="[&>*:last-child]:mb-0">
+                <div className="">
                     {blogs.map(blog => (
                         <BlogCard
                             key={blog.id}

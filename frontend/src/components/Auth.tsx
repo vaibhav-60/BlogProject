@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { SignupInput } from "@100xdevs/medium-common";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
+import { Modal } from "./Modal";
 
 export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     const navigate = useNavigate();
@@ -12,6 +13,8 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
         password: ""
     });
 
+    const [error, setError] = useState<string | null>(null);
+
     async function sendRequest() {
         try {
             const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`, postInputs);
@@ -19,12 +22,14 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
             localStorage.setItem("token", jwt);
             navigate("/blogs");
         } catch (e) {
-            alert("Error while signing up")
+            setError("Error while signing up")
         }
     }
 
     return (
         <div className="h-screen flex justify-center flex-col">
+            {error && <Modal message={error} onClose={() => setError(null)} />}
+
             <div className="flex justify-center">
                 <div>
                     <div className="text-3xl font-bold">
