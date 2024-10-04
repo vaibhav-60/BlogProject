@@ -13,6 +13,8 @@ model User {
   name    String?
   username String @unique
   password String
+  avatar String?
+  bio String?
   blogs    Blog[]
 }
 

@@ -8,6 +8,12 @@ export const Publish = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const navigate = useNavigate();
+    const token = localStorage.getItem('token')
+    if(!token) {
+        console.log("token not found")
+        return;
+    }
+    
     return <div className="bg-zinc-500 min-h-screen">
         <Appbar />
         <div className="pt-16">
@@ -31,7 +37,7 @@ export const Publish = () => {
                                 content: description
                             }, {
                                 headers: {
-                                    Authorization: localStorage.getItem("token")
+                                    Authorization: `Bearer ${token}`
                                 }
                             });
                             navigate(`/blog/${response.data.id}`)

@@ -11,7 +11,7 @@ export const Blogs = () => {
         return (
             <div className="min-h-screen bg-zinc-500 overflow-hidden">
                 <Appbar />
-                <div className="pt-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+                <div className="py-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
                     <BlogSkeleton />
                     <BlogSkeleton />
                     <BlogSkeleton />

@@ -3,6 +3,7 @@ import { Appbar } from "./Appbar";
 import { Avatar } from "./BlogCard";
 
 export const FullBlog = ({ blog }: { blog: Blog }) => {
+    console.log("Date and time: ", blog.createdAt);
     return (
         <div className="bg-zinc-200 text-gray-800 min-h-screen">
             <Appbar />
@@ -33,7 +34,7 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                                     {blog.author.name || "Anonymous"}
                                 </div>
                                 <div className="pt-2 text-gray-600">
-                                    Random catchphrase about the author's ability to grab the user's attention
+                                    {blog.bio}
                                 </div>
                             </div>
                         </div>

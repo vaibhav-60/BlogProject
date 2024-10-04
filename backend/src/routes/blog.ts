@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 import { verify } from "hono/jwt";
+import { auth } from "hono/utils/basic-auth";
 
 export const blogRouter = new Hono<{
     Bindings: {
@@ -10,28 +11,34 @@ export const blogRouter = new Hono<{
         JWT_SECRET: string;
     }, 
     Variables: {
-        userId: string;
+        userId: number;
     }
 }>();
 
 blogRouter.use("/*", async (c, next) => {
     const authHeader = c.req.header("authorization") || "";
+
+    if(!authHeader.startsWith("Bearer ")) {
+        c.status(403);
+        return c.json({ message: "Authorization header missing or malformed"})
+    }
+    const token = authHeader.split(" ")[1];
     try {
-        const user = await verify(authHeader, c.env.JWT_SECRET);
-        if (user) {
-            //@ts-ignore
-            c.set("userId", user.id);
+        const payload = await verify(token, c.env.JWT_SECRET);
+        if (payload && typeof payload.id === "number") {
+            
+            c.set("userId", payload.id);
             await next();
         } else {
             c.status(403);
             return c.json({
-                message: "You are not logged in"
+                message: "invalid token payload"
             })
         }
     } catch(e) {
         c.status(403);
         return c.json({
-            message: "You are not logged in"
+            message: "invalid or expired token"
         })
     }
 });

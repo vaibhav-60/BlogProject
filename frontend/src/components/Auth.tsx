@@ -17,10 +17,11 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
 
     async function sendRequest() {
         try {
+            
             const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`, postInputs);
             const jwt = response.data;
             localStorage.setItem("token", jwt);
-            navigate("/blogs");
+            navigate("/complete-profile");
         } catch (e) {
             setError("Error while signing up")
         }
@@ -45,7 +46,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
                         {type === "signup" && (
                             <LabelledInput
                                 label="Name"
-                                placeholder="Harkirat Singh..."
+                                placeholder="Enter your name"
                                 onChange={(e) => {
                                     setPostInputs({
                                         ...postInputs,
@@ -56,7 +57,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
                         )}
                         <LabelledInput
                             label="Email"
-                            placeholder="harkirat@gmail.com"
+                            placeholder="your email"
                             onChange={(e) => {
                                 setPostInputs({
                                     ...postInputs,

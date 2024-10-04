@@ -10,17 +10,24 @@ export interface Blog {
     "author": {
         "name": string
     }
-    "createdAt": Date
+    "createdAt": string
+    bio: string
 }
 
 export const useBlog = ({ id }: { id: string }) => {
     const [loading, setLoading] = useState(true);
     const [blog, setBlog] = useState<Blog>();
+    const token = localStorage.getItem("token");
+      console.log(token)
+      if (!token) {
+        console.log("error while fetching the token");
+        return;
+      }
 
     useEffect(() => {
         axios.get(`${BACKEND_URL}/api/v1/blog/${id}`, {
             headers: {
-                Authorization: localStorage.getItem("token")
+                Authorization: `Bearer ${token}`
             }
         })
             .then(response => {
@@ -40,9 +47,15 @@ export const useBlogs = () => {
     const [blogs, setBlogs] = useState<Blog[]>([]);
 
     useEffect(() => {
+        const token = localStorage.getItem("token");
+      console.log(token)
+      if (!token) {
+        console.log("error while fetching the token");
+        return;
+      }
         axios.get(`${BACKEND_URL}/api/v1/blog/bulk`, {
             headers: {
-                Authorization: localStorage.getItem("token")
+                Authorization: `Bearer ${token}`
             }
         })
             .then(response => {

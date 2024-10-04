@@ -55,9 +55,14 @@ export const BlogCard = ({
 
 // Avatar component remains the same
 export function Avatar({ name, size = "small" }: { name: string, size?: "small" | "big" }) {
+    const initials = name.split(" ")
+        .filter(word => word.length > 0)
+        .map(word => word[0].toUpperCase())
+        .slice(0, 2)
+        .join("");
     return <div className={`relative inline-flex items-center justify-center overflow-hidden bg-gray-300 dark:bg-gray-600 rounded-full border-2 border-orange-600 ${size === "small" ? "w-6 h-6" : "w-9 h-9"}`}>
         <span className={`${size === "small" ? "text-xs" : "text-md"} font-extralight text-gray-600 dark:text-gray-300`}>
-            {name[0]}
+        {initials}
         </span>
     </div>
 }
